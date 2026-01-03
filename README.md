@@ -2,7 +2,7 @@
 
 ## Overview
 
-his project parallelises a Monte Carlo optimisation algorithm in Java using the Fork/Join framework. The goal was to evaluate how multi-core execution impacts performance, and to understand the real-world limits of parallel scalability.
+This project parallelises a Monte Carlo optimisation algorithm in Java using the Fork/Join framework. The goal was to evaluate how multi-core execution impacts performance, and to understand the real-world limits of parallel scalability.
 
 The project focuses on parallel algorithm design, correctness validation, and performance benchmarking, with an emphasis on when parallelism meaningfully improves runtime and when it does not.
 
