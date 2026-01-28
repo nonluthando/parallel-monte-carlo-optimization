@@ -8,7 +8,7 @@ The project focuses on parallel algorithm design, correctness validation, and pe
 
 
 ## Why This Project
-		•	Demonstrates practical use of Java concurrency and parallelism
+	•	Demonstrates practical use of Java concurrency and parallelism
 	•	Explores systems-level performance trade-offs
 	•	Uses controlled benchmarks to analyse scalability and overhead
 	•	Shows disciplined engineering practices: validation, repeatability, and measurement
