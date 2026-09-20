@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Parallel Monte Carlo Optimisation</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+	<h1>Parallel Monte Carlo Optimisation</h1>
+	<p class="subtitle">Fork/Join hill-climbing minimisation &mdash; serial vs. parallel, visualised.</p>
+</header>
+
+<main>
+	<section class="panel controls">
+		<form id="run-form">
+			<div class="field-grid">
+				<label>Rows
+					<input type="number" name="rows" id="rows" value="400" min="1" max="3000" required>
+				</label>
+				<label>Columns
+					<input type="number" name="cols" id="cols" value="400" min="1" max="3000" required>
+				</label>
+				<label>x min
+					<input type="number" name="xmin" id="xmin" value="-2" step="any" required>
+				</label>
+				<label>x max
+					<input type="number" name="xmax" id="xmax" value="2" step="any" required>
+				</label>
+				<label>y min
+					<input type="number" name="ymin" id="ymin" value="-2" step="any" required>
+				</label>
+				<label>y max
+					<input type="number" name="ymax" id="ymax" value="2" step="any" required>
+				</label>
+				<label>Search density
+					<input type="number" name="density" id="density" value="0.3" min="0.0001" max="2" step="any" required>
+				</label>
+				<label>Sequential threshold
+					<input type="number" name="threshold" id="threshold" value="1000" min="1" required>
+				</label>
+			</div>
+
+			<fieldset class="mode-select">
+				<legend>Run</legend>
+				<label><input type="radio" name="mode" value="both" checked> Serial + Parallel</label>
+				<label><input type="radio" name="mode" value="parallel"> Parallel only</label>
+				<label><input type="radio" name="mode" value="serial"> Serial only</label>
+			</fieldset>
+
+			<div class="actions">
+				<button type="submit" id="run-btn">Run optimisation</button>
+				<span id="status" class="status"></span>
+			</div>
+		</form>
+	</section>
+
+	<section class="panel results" id="results-panel" hidden>
+		<h2>Results</h2>
+		<table id="results-table">
+			<thead>
+				<tr><th></th><th>Time (ms)</th><th>Global min</th><th>x</th><th>y</th><th>Grid visited</th><th>Grid evaluated</th></tr>
+			</thead>
+			<tbody></tbody>
+		</table>
+		<p id="speedup-line" class="speedup" hidden></p>
+	</section>
+
+	<section class="panel viz">
+		<h2>Terrain &amp; search coverage</h2>
+		<p class="hint">Colour = function height (dark = low / good, bright = high). Dots = grid points a search actually visited. Red marker = global minimum found.</p>
+		<canvas id="canvas" width="600" height="600"></canvas>
+	</section>
+</main>
+
+<footer>
+	<p>Java Fork/Join demo &middot; see README for CLI usage</p>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

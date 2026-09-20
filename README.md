@@ -51,9 +51,11 @@ Performance Benchmarking
 
 ## Project Structure
 	•	TerrainArea.java – Terrain representation with lazy evaluation
+	•	Search.java – Serial searcher (used by the serial baseline)
 	•	MonteCarloMinimization.java – Serial baseline implementation
 	•	SearchParallel.java – Fork/Join parallel task
 	•	MonteCarloMinimizationParallel.java – Parallel execution driver
+	•	WebServer.java – Dependency-free HTTP server powering the web UI (see below)
 
 ## How to Run
 
@@ -63,11 +65,36 @@ make
 
 Run (Parallel)
 
-java MonteCarloMinimizationParallel <rows> <cols> <xmin> <xmax> <ymin> <ymax> <search_density>
+java -cp bin MonteCarloMini.MonteCarloMinimizationParallel <rows> <cols> <xmin> <xmax> <ymin> <ymax> <search_density>
 
 Example
 
-java MonteCarloMinimizationParallel 5000 5000 -2 2 -2 2 0.1
+java -cp bin MonteCarloMini.MonteCarloMinimizationParallel 5000 5000 -2 2 -2 2 0.1
+
+Run (Serial)
+
+java -cp bin MonteCarloMini.MonteCarloMinimization <rows> <cols> <xmin> <xmax> <ymin> <ymax> <search_density>
+
+## Web UI
+
+A small browser UI lets you configure a run, execute the serial and/or parallel
+algorithm, and see the terrain, search coverage and the resulting speedup
+without touching the command line.
+
+Start it with:
+
+make web
+
+Then open http://127.0.0.1:8080/ in a browser. It:
+	•	Runs the serial baseline and the Fork/Join parallel version on the same random seed and lets you compare their timings and reported speedup
+	•	Renders the underlying function as a heatmap and overlays which grid points the searches actually visited
+	•	Marks the location of the global minimum that was found
+	•	Lets you tune rows/columns, the (x, y) search area, search density and the parallel sequential-cutoff threshold
+
+The server is built on the JDK's built-in `com.sun.net.httpserver` (no external
+dependencies) and serves the static frontend from `web/`. It binds to
+`127.0.0.1` by default; set `BIND_HOST` to change that, and pass a port as the
+first argument (`java -cp bin MonteCarloMini.WebServer 9090`) or via `make web PORT=9090`.
 
 ## Author
 

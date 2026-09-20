@@ -14,18 +14,24 @@ static final boolean DEBUG=false;
         final int lo;
         final SearchParallel[] searches;
         final int hi;
+        final int sequential_threshold;
        static long startTime = 0;
         static long endTime = 0;
      static int min;
 
- 
-        static final int sequential_threshold=1000; // depends on machine architecture
+
+        static final int DEFAULT_SEQUENTIAL_THRESHOLD=1000; // depends on machine architecture
 
         MonteCarloMinimizationParallel(int l, int h, SearchParallel[] searches, Random rand){
+            this(l, h, searches, rand, DEFAULT_SEQUENTIAL_THRESHOLD);
+        }//constructor end
+
+        MonteCarloMinimizationParallel(int l, int h, SearchParallel[] searches, Random rand, int sequential_threshold){
        lo= l;
        hi=h;
        this.searches=searches;
        this.rand=rand;
+       this.sequential_threshold=sequential_threshold;
 
 }//constructor end
 public Integer compute(){
@@ -39,10 +45,10 @@ if (hi-lo<=sequential_threshold){
       } //for loop
       return min;
       }//if statement
-      else{ 
- MonteCarloMinimizationParallel left = new  MonteCarloMinimizationParallel(lo,(hi+lo)/2,searches,rand);
+      else{
+ MonteCarloMinimizationParallel left = new  MonteCarloMinimizationParallel(lo,(hi+lo)/2,searches,rand,sequential_threshold);
 
-MonteCarloMinimizationParallel right = new  MonteCarloMinimizationParallel((hi+lo)/2,hi,searches,rand);     
+MonteCarloMinimizationParallel right = new  MonteCarloMinimizationParallel((hi+lo)/2,hi,searches,rand,sequential_threshold);
   left.fork(); //starts parallel thread
    int rightAns=right.compute();// gives main thread something to do ontop of handing out tasks
    int  leftAns=left.join(); //waits for left thread to finish, then gets its answer    
