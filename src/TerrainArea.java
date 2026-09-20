@@ -45,23 +45,28 @@ public class TerrainArea {
 		 visit[x][y]=searcherID;
 		 grid_points_visited++;}
 	
-	 //evaluate function at a grid point
+	//pure terrain function - shared by the algorithm and by anything that wants to render the landscape
+	public static double computeValue(double x_coord, double y_coord) {
+		return -2 * Math.sin(x_coord) * Math.cos(y_coord/2.0) + Math.log( Math.abs(y_coord - Math.PI*2) );
+
+		// **** NB  Rosenbrock function below can be used instead for validation ****
+		/*double tmp = y_coord-Math.pow(x_coord,2);
+		tmp=100.0*Math.pow(tmp,2);
+		double tmp2=Math.pow(1-x_coord,2);
+		return tmp2+tmp; */
+	}
+
+	//evaluate function at a grid point
 	int get_height( int x, int y) {
 		if (heights[x][y]!=Integer.MAX_VALUE) {
 			return heights[x][y]; //don't recalculate if done before
 		}
 		/* Calculate the coordinates of the point in the ranges */
-		double x_coord = xmin + ( (xmax - xmin) / rows ) * x;
-		double y_coord = ymin + ( (ymax - ymin) / columns ) * y;
+		double x_coord = getXcoord(x);
+		double y_coord = getYcoord(y);
 		/* Compute function value */
-		double value = -2 * Math.sin(x_coord) * Math.cos(y_coord/2.0) + Math.log( Math.abs(y_coord - Math.PI*2) );
-		
-		// **** NB  Rosenbrock function below can be used instead for validation ****
-		/*double tmp = y_coord-Math.pow(x_coord,2);
-		tmp=100.0*Math.pow(tmp,2);
-		double tmp2=Math.pow(1-x_coord,2);
-		double value = tmp2+tmp; */
-	
+		double value = computeValue(x_coord, y_coord);
+
 		/* Transform to fixed point precision */
 		int fixed_point = (int)( PRECISION * value );
 		heights[x][y]=fixed_point;
@@ -161,5 +166,10 @@ public class TerrainArea {
 		return ymin + ( (ymax - ymin) / columns ) * y;
 	}
 
+	public int getRows() { return rows; }
+	public int getColumns() { return columns; }
+
+	//which searcher (if any) visited this grid point - 0 means unvisited. Used for rendering search coverage.
+	public int getVisited(int x, int y) { return visit[x][y]; }
 
 }
