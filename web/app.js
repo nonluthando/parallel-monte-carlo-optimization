@@ -114,9 +114,9 @@
 			}
 		}
 
-		// --- visited overlay ---
+		// --- visited overlay --- (high-contrast colour so it reads against any part of the heat gradient)
 		const visited = body.visited;
-		ctx.fillStyle = 'rgba(255,255,255,0.55)';
+		ctx.fillStyle = 'rgba(0, 255, 200, 0.9)';
 		const vCellW = w / visited.cols, vCellH = h / visited.rows;
 		for (let i = 0; i < visited.rows; i++) {
 			for (let j = 0; j < visited.cols; j++) {

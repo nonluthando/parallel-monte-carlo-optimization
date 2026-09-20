@@ -35,7 +35,7 @@
 					<input type="number" name="ymax" id="ymax" value="2" step="any" required>
 				</label>
 				<label>Search density
-					<input type="number" name="density" id="density" value="0.3" min="0.0001" max="2" step="any" required>
+					<input type="number" name="density" id="density" value="0.003" min="0.0001" max="2" step="any" required>
 				</label>
 				<label>Sequential threshold
 					<input type="number" name="threshold" id="threshold" value="1000" min="1" required>
@@ -69,7 +69,7 @@
 
 	<section class="panel viz">
 		<h2>Terrain &amp; search coverage</h2>
-		<p class="hint">Colour = function height (dark = low / good, bright = high). Dots = grid points a search actually visited. Red marker = global minimum found.</p>
+		<p class="hint">Background colour = function height (dark = low / good, bright = high). Teal cells = grid points a search actually visited on its way downhill. Red marker = global minimum found. Lower the search density to see individual descent paths more clearly.</p>
 		<canvas id="canvas" width="600" height="600"></canvas>
 	</section>
 </main>
