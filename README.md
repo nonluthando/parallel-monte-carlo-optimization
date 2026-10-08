@@ -16,8 +16,13 @@ The project focuses on parallel algorithm design, correctness validation, and pe
 
 ## What I Built
 
+The starter code (M. Kuttel, UCT, adapted from the EduHPC'22 "Peachy
+Assignment" by Arturo Gonzalez Escribano) supplied the terrain model
+(`TerrainArea`) and the hill-descent search (`Search`/`SearchParallel`), plus
+`MonteCarloMinimization.java` as a fixed serial reference implementation.
+
 ### Parallel Implementation
-	•	Converted a serial Monte Carlo optimisation algorithm into a Fork/Join-based parallel solution
+	•	Wrote `MonteCarloMinimizationParallel.java` from scratch as a `RecursiveTask<Integer>`: it recursively forks the search array in half down to a configurable sequential cutoff, then returns the minimum of the two halves
 	•	Applied divide-and-conquer recursion with a configurable sequential cutoff to balance task overhead and throughput
 	•	Executed independent searches concurrently using shared-memory parallelism
 
@@ -77,9 +82,10 @@ java -cp bin MonteCarloMini.MonteCarloMinimization <rows> <cols> <xmin> <xmax> <
 
 ## Web UI
 
-A small browser UI lets you configure a run, execute the serial and/or parallel
-algorithm, and see the terrain, search coverage and the resulting speedup
-without touching the command line.
+Beyond the coursework requirement (a CLI-driven serial/parallel comparison), I
+built a small browser UI that lets you configure a run, execute the serial
+and/or parallel algorithm, and see the terrain, search coverage and the
+resulting speedup without touching the command line.
 
 Start it with:
 
